@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erica's Travels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF8F3;
+    --ink: #1A1A18;
+    --muted: #7A7A72;
+    --border: #E2DED6;
+    --accent-india: #C8602A;
+    --accent-vietnam: #2A7A5A;
+    --accent-bhutan: #B8420F;
+    --accent-thailand: #1A5C8A;
+    --accent-malaysia: #8A2A5C;
+    --accent-home: #4A4A40;
+    --current-accent: var(--accent-home);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; animation: fadeIn 0.5s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    cursor: pointer;
+    font-style: italic;
+  }
+
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+
+  .nav-link {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+    padding-bottom: 2px;
+    border: none;
+    background: none;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 1px;
+    background: var(--current-accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover { color: var(--ink); }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  .nav-link.active { color: var(--ink); }
+
+  /* ── HOME PAGE ── */
+  .home-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 64px);
+  }
+
+  .home-hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px;
+  }
+
+  .home-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .home-title {
+    font-family: var(--serif);
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .home-title em { font-style: italic; color: var(--accent-home); }
+
+  .home-bio {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+
+  .social-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: none;
+    text-decoration: none;
+  }
+
+  .social-btn:hover {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+
+  .home-hero-img {
+    position: relative;
+    overflow: hidden;
+    background: #D4C9B8;
+  }
+
+  .home-hero-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(10%);
+  }
+
+  .home-hero-img .img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--cream) 0%, transparent 15%);
+  }
+
+  /* ── DESTINATIONS GRID ── */
+  .destinations-section {
+    padding: 96px 64px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-count {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+  }
+
+  .dest-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    background: #C8BFB0;
+  }
+
+  .dest-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: sepia(15%) brightness(0.92);
+  }
+
+  .dest-card:hover img {
+    transform: scale(1.06);
+    filter: sepia(5%) brightness(1.0);
+  }
+
+  .dest-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,20,16,0.85) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 20px;
+    transition: background 0.3s;
+  }
+
+  .dest-card:hover .dest-card-overlay {
+    background: linear-gradient(to top, rgba(20,20,16,0.75) 0%, transparent 50%);
+  }
+
+  .dest-card-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 300;
+    color: #FAF8F3;
+    letter-spacing: 0.02em;
+    font-style: italic;
+  }
+
+  .dest-card-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,248,243,0.65);
+    margin-top: 4px;
+  }
+
+  .dest-card-arrow {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 32px; height: 32px;
+    background: rgba(250,248,243,0.15);
+    border: 1px solid rgba(250,248,243,0.3);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px;
+    color: #FAF8F3;
+  }
+
+  .dest-card:hover .dest-card-arrow { opacity: 1; }
+
+  /* ── DESTINATION PAGE ── */
+  .dest-hero {
+    position: relative;
+    height: 70vh;
+    min-height: 480px;
+    overflow: hidden;
+    background: #C0B5A5;
+  }
+
+  .dest-hero img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.75) sepia(15%);
+  }
+
+  .dest-hero-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 48px 64px;
+    background: linear-gradient(to top, rgba(20,20,16,0.9) 0%, transparent 100%);
+  }
+
+  .dest-hero-country {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,248,243,0.7);
+    margin-bottom: 12px;
+  }
+
+  .dest-hero-title {
+    font-family: var(--serif);
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 300;
+    color: #FAF8F3;
+    line-height: 0.95;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  .dest-hero-subtitle {
+    font-size: 14px;
+    color: rgba(250,248,243,0.75);
+    margin-top: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ACCENT BAR ── */
+  .accent-bar {
+    height: 4px;
+    background: var(--current-accent);
+  }
+
+  /* ── DEST CONTENT ── */
+  .dest-content { padding: 80px 64px; }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .content-main {}
+
+  .content-block { margin-bottom: 56px; }
+
+  .content-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--current-accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .content-label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--current-accent);
+  }
+
+  .content-heading {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .content-body {
+    color: #4A4A42;
+    line-height: 1.85;
+    font-size: 15px;
+  }
+
+  .content-body p + p { margin-top: 16px; }
+
+  /* ── SIDEBAR ── */
+  .content-sidebar {}
+
+  .info-card {
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .info-card-header {
+    padding: 16px 20px;
+    background: var(--ink);
+    color: var(--cream);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card-body {
+    padding: 20px;
+    font-size: 14px;
+    color: #4A4A42;
+    line-height: 1.75;
+  }
+
+  .tip-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tip-item:last-child { border-bottom: none; }
+
+  .tip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--current-accent);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section {
+    padding: 0 64px 80px;
+  }
+
+  .gallery-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #C8BFB0;
+  }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(10%) brightness(0.95);
+    transition: transform 0.5s ease, filter 0.3s;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+    filter: sepia(5%) brightness(1.02);
+  }
+
+  /* ── QUOTE BLOCK ── */
+  .quote-block {
+    border-left: 3px solid var(--current-accent);
+    padding: 20px 28px;
+    margin: 32px 0;
+    background: rgba(0,0,0,0.025);
+  }
+
+  .quote-block blockquote {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .quote-attribution {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream);
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .footer-social { display: flex; gap: 24px; }
+
+  .footer-social a {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-social a:hover { color: var(--ink); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── NEXT DEST BAR ── */
+  .next-dest {
+    border-top: 1px solid var(--border);
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .next-dest:hover { background: rgba(0,0,0,0.02); }
+
+  .next-dest-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .next-dest-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 300;
+    margin-top: 4px;
+  }
+
+  .next-dest-arrow {
+    font-size: 28px;
+    color: var(--current-accent);
+    transition: transform 0.3s;
+  }
+
+  .next-dest:hover .next-dest-arrow { transform: translateX(8px); }
+
+  /* ── PLACEHOLDER IMAGES ── */
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    background: var(--ph-bg, #B0A898);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 16px; }
+    .home-hero { grid-template-columns: 1fr; }
+    .home-hero-img { height: 40vh; }
+    .home-hero-text { padding: 48px 24px; }
+    .destinations-section { padding: 64px 24px; }
+    .dest-grid { grid-template-columns: 1fr 1fr; }
+    .dest-hero-content { padding: 32px 24px; }
+    .dest-content { padding: 48px 24px; }
+    .content-grid { grid-template-columns: 1fr; gap: 40px; }
+    .gallery-section { padding: 0 24px 64px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
+    .next-dest { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Erica's Travels</div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nav-home" onclick="showPage('home')">Home</button>
+    <button class="nav-link" id="nav-india" onclick="showPage('india')">India</button>
+    <button class="nav-link" id="nav-vietnam" onclick="showPage('vietnam')">Vietnam</button>
+    <button class="nav-link" id="nav-bhutan" onclick="showPage('bhutan')">Bhutan</button>
+    <button class="nav-link" id="nav-thailand" onclick="showPage('thailand')">Thailand</button>
+    <button class="nav-link" id="nav-malaysia" onclick="showPage('malaysia')">Malaysia</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="home-hero">
+    <div class="home-hero-text">
+      <div class="home-eyebrow">Travel blog &amp; social media</div>
+      <h1 class="home-title">
+        Stories from<br>
+        <em>every corner</em><br>
+        of the world
+      </h1>
+      <p class="home-bio">
+        Hi, I'm Erica — a travel blogger and social media influencer documenting adventures across Asia and beyond. Follow along as I explore temples, taste street food, hike mountain trails, and uncover the hidden gems of each destination.
+      </p>
+      <div class="social-row">
+        <a class="social-btn" href="#" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a class="social-btn" href="#" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.7 5.5 4.3 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+          Twitter
+        </a>
+        <a class="social-btn" href="#" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58a2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <div class="home-hero-img">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Mountain landscape" loading="lazy">
+      <div class="img-overlay"></div>
+    </div>
+  </div>
+
+  <!-- Destinations grid -->
+  <section class="destinations-section">
+    <div class="section-header">
+      <h2 class="section-title">Destinations</h2>
+      <div class="section-line"></div>
+      <span class="section-count">5 countries</span>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card" onclick="showPage('india')">
+        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=75" alt="India">
+        <div class="dest-card-overlay">
+          <div class="dest-card-name">India</div>
+          <div class="dest-card-tag">South Asia</div>
+        </div>
+        <div class="dest-card-arrow">→</div>
+      </div>
+      <div class="dest-card" onclick="showPage('vietnam')">
+        <img src="https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=75" alt="Vietnam">
+        <div class="dest-card-overlay">
+          <div class="dest-card-name">Vietnam</div>
+          <div class="dest-card-tag">Southeast Asia</div>
+        </div>
+        <div class="dest-card-arrow">→</div>
+      </div>
+      <div class="dest-card" onclick="showPage('bhutan')">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75" alt="Bhutan">
+        <div class="dest-card-overlay">
+          <div class="dest-card-name">Bhutan</div>
+          <div class="dest-card-tag">Himalayan Kingdom</div>
+        </div>
+        <div class="dest-card-arrow">→</div>
+      </div>
+      <div class="dest-card" onclick="showPage('thailand')">
+        <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&q=75" alt="Thailand">
+        <div class="dest-card-overlay">
+          <div class="dest-card-name">Thailand</div>
+          <div class="dest-card-tag">Southeast Asia</div>
+        </div>
+        <div class="dest-card-arrow">→</div>
+      </div>
+      <div class="dest-card" onclick="showPage('malaysia')">
+        <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=75" alt="Malaysia">
+        <div class="dest-card-overlay">
+          <div class="dest-card-name">Malaysia</div>
+          <div class="dest-card-tag">Southeast Asia</div>
+        </div>
+        <div class="dest-card-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Twitter</a>
+      <a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     INDIA PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-india" style="--current-accent: var(--accent-india)">
+
+  <div class="dest-hero">
+    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=80" alt="India — Taj Mahal">
+    <div class="dest-hero-content">
+      <div class="dest-hero-country">South Asia · Your Home Country</div>
+      <h1 class="dest-hero-title">India</h1>
+      <p class="dest-hero-subtitle">A land of ancient temples, spice markets, and breathtaking diversity</p>
+    </div>
+  </div>
+  <div class="accent-bar" style="background: var(--accent-india)"></div>
+
+  <div class="dest-content">
+    <div class="content-grid">
+      <div class="content-main">
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-india)">Things to see &amp; do</div>
+          <h2 class="content-heading">Temples, palaces &amp; endless wonder</h2>
+          <div class="content-body">
+            <p>India is a sensory overload in the best possible way. From the moment you land, colours, sounds, and aromas compete for your attention. The Taj Mahal in Agra is an obvious starting point — and despite the crowds, it will genuinely take your breath away at sunrise.</p>
+            <p>Head north to Rajasthan for palace-hopping through Jaipur, Jodhpur, and Udaipur. The blue streets of Jodhpur's old city and the lake-reflected palaces of Udaipur feel almost dreamlike. Further south, Kerala's backwaters offer a completely different pace — a houseboat drifting past rice paddies is one of travel's great pleasures.</p>
+            <p>For spiritual seekers, Varanasi on the banks of the Ganges is unlike anywhere else on earth — raw, overwhelming, and deeply moving. Don't miss the evening Ganga Aarti ceremony.</p>
+          </div>
+
+          <div class="quote-block">
+            <blockquote>"India will always have something new to teach you — no matter how many times you return."</blockquote>
+            <div class="quote-attribution">— Erica, on her third visit</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-india)">How to get there</div>
+          <h2 class="content-heading">Getting to India</h2>
+          <div class="content-body">
+            <p>India is well connected internationally, with major airports in Delhi (Indira Gandhi International), Mumbai (Chhatrapati Shivaji Maharaj), Bangalore, and Chennai. Most long-haul flights route through Delhi or Mumbai.</p>
+            <p>Most nationalities require a visa — the e-Visa system makes this straightforward, typically taking 2–4 business days to process online. Indian trains are an experience in themselves and a fantastic way to travel between cities once you arrive. Book train tickets early through the IRCTC website.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-sidebar">
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-india)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Best time to visit
+          </div>
+          <div class="info-card-body">
+            <strong>October – March</strong> is ideal for most of India — cool, dry weather perfect for sightseeing. Avoid April–June (extreme heat) and July–September (monsoon) unless you specifically want to experience the rains. Rajasthan is best November–February.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-india)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Erica's top picks
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div>Taj Mahal at sunrise — arrive before 7am to beat the crowds</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div>Kerala houseboat stay — minimum two nights on the backwaters</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div>Varanasi Ganga Aarti — watch from a boat on the river</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div>Street food in Delhi's Chandni Chowk — go hungry!</div></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-india)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V10M10 20V4M14 20V10M18 20V4"/></svg>
+            Quick facts
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div><strong>Currency:</strong> Indian Rupee (INR)</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div><strong>Language:</strong> Hindi, English + 21 official languages</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div><strong>Visa:</strong> e-Visa available for most nationalities</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-india)"></div><div><strong>Time zone:</strong> IST (UTC+5:30)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-label">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=500&q=75" alt="Taj Mahal"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94eda?w=500&q=75" alt="India streets"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=500&q=75" alt="India temple"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=500&q=75" alt="India landscape"></div>
+    </div>
+  </div>
+
+  <div class="next-dest" onclick="showPage('vietnam')">
+    <div>
+      <div class="next-dest-label">Next destination</div>
+      <div class="next-dest-name">Vietnam</div>
+    </div>
+    <div class="next-dest-arrow">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Twitter</a>
+      <a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     VIETNAM PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-vietnam" style="--current-accent: var(--accent-vietnam)">
+
+  <div class="dest-hero">
+    <img src="https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=1400&q=80" alt="Vietnam — Ha Long Bay">
+    <div class="dest-hero-content">
+      <div class="dest-hero-country">Southeast Asia</div>
+      <h1 class="dest-hero-title">Vietnam</h1>
+      <p class="dest-hero-subtitle">Limestone karsts, lantern-lit streets, and a cuisine that will haunt you</p>
+    </div>
+  </div>
+  <div class="accent-bar" style="background: var(--accent-vietnam)"></div>
+
+  <div class="dest-content">
+    <div class="content-grid">
+      <div class="content-main">
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-vietnam)">Things to see &amp; do</div>
+          <h2 class="content-heading">From Hanoi to Hội An</h2>
+          <div class="content-body">
+            <p>Vietnam stretches over 1,600km from north to south, and every region has its own distinct character. Start in Hanoi — the capital's chaotic Old Quarter is best explored on foot, dodging scooters and discovering hidden coffee shops behind wooden shopfronts.</p>
+            <p>Ha Long Bay is the image most people associate with Vietnam, and rightly so — over 1,600 limestone islands rising from emerald waters. Take an overnight cruise to truly appreciate the scale. South of Hanoi, the town of Hội An is one of Southeast Asia's most beautifully preserved trading ports. Its famous lantern-lit streets glow every evening, and the tailors can make you a custom outfit in 24 hours.</p>
+            <p>Ho Chi Minh City (Saigon) in the south offers a faster pace, excellent street food, and fascinating war history at the Cu Chi Tunnels and War Remnants Museum.</p>
+          </div>
+
+          <div class="quote-block">
+            <blockquote>"I came for Ha Long Bay. I stayed for the bánh mì at 7am on a Hội An street corner."</blockquote>
+            <div class="quote-attribution">— Erica, Hội An</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-vietnam)">How to get there</div>
+          <h2 class="content-heading">Getting to Vietnam</h2>
+          <div class="content-body">
+            <p>Vietnam has three main international airports: Nội Bài (Hanoi), Đà Nẵng (central), and Tân Sơn Nhất (Ho Chi Minh City). Most travellers fly into Hanoi or Ho Chi Minh City. Airlines including Vietnam Airlines, VietJet, and international carriers connect major Asian hubs.</p>
+            <p>Most nationalities can get a visa on arrival or an e-visa. The e-visa is processed online within 3 business days and is valid for 90 days with single or multiple entry. Within Vietnam, budget flights, overnight trains, and sleeper buses are all affordable options.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-sidebar">
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-vietnam)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Best time to visit
+          </div>
+          <div class="info-card-body">
+            <strong>February – April</strong> for central and north Vietnam — mild and dry. <strong>November – January</strong> is best for the south. The climate varies greatly by region, so timing depends on where you're headed. Hội An can flood October–November.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-vietnam)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Erica's top picks
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div>Ha Long Bay overnight cruise — book a smaller boat for better service</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div>Hội An full moon lantern festival — magical every month</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div>Phở for breakfast in Hanoi's Old Quarter</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div>Motorbike through the Hai Van Pass at sunset</div></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-vietnam)">Quick facts</div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div><strong>Currency:</strong> Vietnamese Đồng (VND)</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div><strong>Language:</strong> Vietnamese</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div><strong>Visa:</strong> e-Visa, 90 days, most nationalities</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-vietnam)"></div><div><strong>Time zone:</strong> ICT (UTC+7)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-label">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=500&q=75" alt="Vietnam rice paddies"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=75" alt="Vietnam street"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=75" alt="Hoi An lanterns"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1540822083-c8c6e6b73e3e?w=500&q=75" alt="Vietnam bay"></div>
+    </div>
+  </div>
+
+  <div class="next-dest" onclick="showPage('bhutan')">
+    <div>
+      <div class="next-dest-label">Next destination</div>
+      <div class="next-dest-name">Bhutan</div>
+    </div>
+    <div class="next-dest-arrow">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     BHUTAN PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-bhutan" style="--current-accent: var(--accent-bhutan)">
+
+  <div class="dest-hero">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80" alt="Bhutan — Tiger's Nest">
+    <div class="dest-hero-content">
+      <div class="dest-hero-country">Himalayan Kingdom</div>
+      <h1 class="dest-hero-title">Bhutan</h1>
+      <p class="dest-hero-subtitle">The last Shangri-La — where happiness is measured, not just felt</p>
+    </div>
+  </div>
+  <div class="accent-bar" style="background: var(--accent-bhutan)"></div>
+
+  <div class="dest-content">
+    <div class="content-grid">
+      <div class="content-main">
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-bhutan)">Things to see &amp; do</div>
+          <h2 class="content-heading">The kingdom that measures happiness</h2>
+          <div class="content-body">
+            <p>Bhutan is unlike anywhere else in Asia. This tiny Himalayan kingdom has deliberately chosen to limit tourism in order to protect its culture and environment — which means every visitor gets a pristine, unhurried experience.</p>
+            <p>The must-do is the Paro Taktsang hike, better known as Tiger's Nest. Clinging to a 3,000m cliff face, this sacred Buddhist monastery takes about two hours to reach on foot — but the view from across the valley is one of travel's great rewards. The capital Thimphu offers a fascinating blend of ancient tradition and modern life, all without a single traffic light.</p>
+            <p>The Punakha Dzong — a fortress-monastery at the confluence of two rivers — is arguably the most beautiful building in the Himalayas. Visit in spring when the jacaranda trees bloom purple around it.</p>
+          </div>
+
+          <div class="quote-block">
+            <blockquote>"Tiger's Nest will humble you. The hike, the monastery, the silence — all of it."</blockquote>
+            <div class="quote-attribution">— Erica, Paro Valley</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-bhutan)">How to get there</div>
+          <h2 class="content-heading">Getting to Bhutan</h2>
+          <div class="content-body">
+            <p>Bhutan is only accessible by air through Druk Air or Bhutan Airlines. Flights connect from Bangkok, Delhi, Kathmandu, Singapore, and a handful of other regional hubs to Paro International Airport — one of the world's most dramatic landings.</p>
+            <p>All tourists must pay a Sustainable Development Fee of USD 100 per person per night, which covers accommodation, meals, transport, and a guide. This is not optional — but it ensures tourism remains high-quality and low-impact. Visas are processed through your licensed tour operator.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-sidebar">
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-bhutan)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Best time to visit
+          </div>
+          <div class="info-card-body">
+            <strong>March – May</strong> for spring blooms and clear skies. <strong>September – November</strong> for post-monsoon clarity with incredible mountain views. Winter (December–February) is cold but crowd-free and magical.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-bhutan)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Erica's top picks
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div>Hike to Tiger's Nest — start at 7am to beat the heat</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div>Punakha Dzong in spring — the purple jacaranda is spectacular</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div>Attend a Tsechu festival if your dates align</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div>Try ema datshi — Bhutan's famous chilli cheese dish</div></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-bhutan)">Quick facts</div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div><strong>Currency:</strong> Bhutanese Ngultrum (BTN)</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div><strong>Language:</strong> Dzongkha</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div><strong>Visa:</strong> Via licensed tour operator only</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-bhutan)"></div><div><strong>Time zone:</strong> BTT (UTC+6)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-label">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=500&q=75" alt="Bhutan monastery"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1593692909907-8f0a2e5e3c8f?w=500&q=75" alt="Bhutan landscape"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=75" alt="Bhutan mountains"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=500&q=75" alt="Bhutan dzong"></div>
+    </div>
+  </div>
+
+  <div class="next-dest" onclick="showPage('thailand')">
+    <div>
+      <div class="next-dest-label">Next destination</div>
+      <div class="next-dest-name">Thailand</div>
+    </div>
+    <div class="next-dest-arrow">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     THAILAND PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-thailand" style="--current-accent: var(--accent-thailand)">
+
+  <div class="dest-hero">
+    <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1400&q=80" alt="Thailand — Temples">
+    <div class="dest-hero-content">
+      <div class="dest-hero-country">Southeast Asia</div>
+      <h1 class="dest-hero-title">Thailand</h1>
+      <p class="dest-hero-subtitle">Golden temples, turquoise islands, and the world's greatest street food</p>
+    </div>
+  </div>
+  <div class="accent-bar" style="background: var(--accent-thailand)"></div>
+
+  <div class="dest-content">
+    <div class="content-grid">
+      <div class="content-main">
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-thailand)">Things to see &amp; do</div>
+          <h2 class="content-heading">Temples, islands &amp; night markets</h2>
+          <div class="content-body">
+            <p>Thailand is a destination that rewards every type of traveller. Bangkok is one of Asia's great cities — chaotic, delicious, and utterly absorbing. The Grand Palace and Wat Pho are unmissable; equally essential is losing yourself in a Chinatown street market at midnight with a bowl of noodle soup.</p>
+            <p>The north offers a calmer experience. Chiang Mai is the cultural heart of the country — from the 300 temples within the old city walls to the night bazaars and cooking classes, it's a city you could happily spend two weeks in. The hill tribe villages in the surrounding mountains offer insight into a way of life that has remained largely unchanged for centuries.</p>
+            <p>And then there are the islands. The Andaman coast (Krabi, Koh Lanta) and the Gulf of Thailand (Koh Samui, Koh Tao) offer different experiences — the Andaman wins for dramatic limestone scenery, while the Gulf is better for scuba diving.</p>
+          </div>
+
+          <div class="quote-block">
+            <blockquote>"Bangkok's street food at 1am, eaten on a plastic stool by a canal — that's when I fell completely in love."</blockquote>
+            <div class="quote-attribution">— Erica, Bangkok</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-thailand)">How to get there</div>
+          <h2 class="content-heading">Getting to Thailand</h2>
+          <div class="content-body">
+            <p>Suvarnabhumi Airport (Bangkok) is one of Southeast Asia's busiest hubs and connects to virtually every major city in the world. Don Don Mueang is Bangkok's budget airline terminal. Phuket and Chiang Mai also have international airports.</p>
+            <p>Most nationalities receive a 30-day visa exemption on arrival, extendable once at a local immigration office. Thailand is well served by budget airlines — AirAsia, Nok Air, Lion Air — making domestic travel fast and affordable.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-sidebar">
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-thailand)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Best time to visit
+          </div>
+          <div class="info-card-body">
+            <strong>November – April</strong> is the dry season — ideal nationwide. The Andaman coast is best avoided May–October (monsoon). The Gulf coast has its own schedule — Koh Samui is fine October–April.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-thailand)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Erica's top picks
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div>Sunrise at Wat Phra That Doi Suthep, Chiang Mai</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div>Bangkok's Or Tor Kor Market for the freshest produce</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div>Kayak through the sea caves around Koh Hong, Krabi</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div>Take a Thai cooking class — it'll change your kitchen at home</div></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-thailand)">Quick facts</div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div><strong>Currency:</strong> Thai Baht (THB)</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div><strong>Language:</strong> Thai</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div><strong>Visa:</strong> 30-day exemption for most nationalities</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-thailand)"></div><div><strong>Time zone:</strong> ICT (UTC+7)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-label">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1508009603885-50cf7c8dd0d5?w=500&q=75" alt="Thailand temple"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500&q=75" alt="Thailand beach"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?w=500&q=75" alt="Thailand island"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=500&q=75" alt="Thailand market"></div>
+    </div>
+  </div>
+
+  <div class="next-dest" onclick="showPage('malaysia')">
+    <div>
+      <div class="next-dest-label">Next destination</div>
+      <div class="next-dest-name">Malaysia</div>
+    </div>
+    <div class="next-dest-arrow">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     MALAYSIA PAGE
+═══════════════════════════════════════ -->
+<div class="page" id="page-malaysia" style="--current-accent: var(--accent-malaysia)">
+
+  <div class="dest-hero">
+    <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1400&q=80" alt="Malaysia — Kuala Lumpur">
+    <div class="dest-hero-content">
+      <div class="dest-hero-country">Southeast Asia</div>
+      <h1 class="dest-hero-title">Malaysia</h1>
+      <p class="dest-hero-subtitle">Rainforest, skyscrapers, and a food culture that defines the nation</p>
+    </div>
+  </div>
+  <div class="accent-bar" style="background: var(--accent-malaysia)"></div>
+
+  <div class="dest-content">
+    <div class="content-grid">
+      <div class="content-main">
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-malaysia)">Things to see &amp; do</div>
+          <h2 class="content-heading">From KL's skyline to Borneo's jungle</h2>
+          <div class="content-body">
+            <p>Malaysia is one of Southeast Asia's most underrated destinations — a country of extraordinary contrasts where colonial architecture sits alongside Islamic skyscrapers, and ancient rainforest lies within an hour of the capital.</p>
+            <p>Kuala Lumpur is the obvious starting point. The Petronas Twin Towers are genuinely impressive in person, but the city's real soul is found in its hawker stalls — Jalan Alor night market, the coffee shops of Chinatown, and the roti canai eaten at a mamak stall at midnight.</p>
+            <p>George Town in Penang is a UNESCO World Heritage city and arguably the food capital of Asia. The street art, heritage shophouses, and multi-cultural food scene could occupy you for a full week. For nature lovers, the ancient rainforests of Taman Negara and the orangutan sanctuaries of Borneo (Sabah and Sarawak) are world-class wildlife experiences.</p>
+          </div>
+
+          <div class="quote-block">
+            <blockquote>"I went to Malaysia for the Petronas Towers. I stayed for the char kway teow in Penang."</blockquote>
+            <div class="quote-attribution">— Erica, George Town</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label" style="color:var(--accent-malaysia)">How to get there</div>
+          <h2 class="content-heading">Getting to Malaysia</h2>
+          <div class="content-body">
+            <p>Kuala Lumpur International Airport (KLIA) is a major regional hub with direct flights from Europe, the Middle East, Australia, and Asia. The budget terminal KLIA2 serves AirAsia and other low-cost carriers — useful for onward travel within Southeast Asia.</p>
+            <p>Most nationalities do not need a visa for Malaysia (90-day entry on arrival). The country is well connected internally by budget airlines, buses, and trains. The KTM rail network connects KL to the Thai border, and flights to Borneo are frequent and affordable.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-sidebar">
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-malaysia)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Best time to visit
+          </div>
+          <div class="info-card-body">
+            <strong>March – October</strong> for the west coast (KL, Penang, Langkawi). <strong>October – February</strong> for the east coast and Borneo. Malaysia is tropical year-round — some rain is always possible but rarely ruins a trip.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-malaysia)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Erica's top picks
+          </div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div>Penang's Gurney Drive hawker centre at sunset</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div>Sunrise at Batu Caves — arrive before the crowds</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div>Orangutan sanctuary in Sepilok, Sabah</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div>George Town heritage walk with a local guide</div></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header" style="background:var(--accent-malaysia)">Quick facts</div>
+          <div class="info-card-body">
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div><strong>Currency:</strong> Malaysian Ringgit (MYR)</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div><strong>Language:</strong> Malay, English widely spoken</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div><strong>Visa:</strong> 90-day visa-free for most nationalities</div></div>
+            <div class="tip-item"><div class="tip-dot" style="background:var(--accent-malaysia)"></div><div><strong>Time zone:</strong> MYT (UTC+8)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-label">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1542640244-7e672d6cef4e?w=500&q=75" alt="Petronas Towers"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=75" alt="Malaysia street food"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1582483648646-a70a5d4c9c74?w=500&q=75" alt="Malaysia rainforest"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=500&q=75" alt="Penang"></div>
+    </div>
+  </div>
+
+  <div class="next-dest" onclick="showPage('home')">
+    <div>
+      <div class="next-dest-label">Back to</div>
+      <div class="next-dest-name">All destinations</div>
+    </div>
+    <div class="next-dest-arrow">→</div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Erica's Travels</div>
+    <div class="footer-social">
+      <a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+    <div class="footer-copy">© 2026 Erica's Travels</div>
+  </footer>
+</div>
+
+
+<script>
+  const pages = ['home','india','vietnam','bhutan','thailand','malaysia'];
+
+  function showPage(id) {
+    pages.forEach(p => {
+      document.getElementById('page-' + p).classList.remove('active');
+      document.getElementById('nav-' + p).classList.remove('active');
+    });
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
